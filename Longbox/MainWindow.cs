@@ -9,6 +9,7 @@ namespace Longbox
         public MainWindow()
         {
             InitializeComponent();
+            pageView.Window = this;
         }
 
         private void openButton_Click(object sender, EventArgs e)
@@ -19,6 +20,11 @@ namespace Longbox
         private void openFileDialog_FileOk(object sender, CancelEventArgs e)
         {
             pageView.OpenComic(openFileDialog.FileName);
+        }
+
+        public void setPageLabel(string txt)
+        {
+            pageNumberLabel.Text = txt;
         }
     }
 }

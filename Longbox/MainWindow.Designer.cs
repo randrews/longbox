@@ -33,6 +33,7 @@
             this.fullScreenButton = new System.Windows.Forms.ToolStripButton();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.pageView = new Longbox.PageView();
+            this.pageNumberLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -40,7 +41,8 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openButton,
-            this.fullScreenButton});
+            this.fullScreenButton,
+            this.pageNumberLabel});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(284, 25);
@@ -80,6 +82,12 @@
             this.pageView.Size = new System.Drawing.Size(284, 236);
             this.pageView.TabIndex = 1;
             // 
+            // pageNumberLabel
+            // 
+            this.pageNumberLabel.Name = "pageNumberLabel";
+            this.pageNumberLabel.Size = new System.Drawing.Size(0, 22);
+            this.pageNumberLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -103,6 +111,7 @@
         private System.Windows.Forms.ToolStripButton fullScreenButton;
         private PageView pageView;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.ToolStripLabel pageNumberLabel;
     }
 }
 

@@ -18,7 +18,8 @@ namespace Longbox
         private int CurrentPageNumber { get; set; }
         private Image CurrentPage { get; set; }
         private Task<Image> NextPage { get; set; }
-        private Image PrevPage { get; set; }
+        private Task<Image> PrevPage { get; set; }
+        public MainWindow Window { get; set; }
 
         public PageView()
         {
@@ -43,6 +44,7 @@ namespace Longbox
             CurrentPageNumber = 0;
             CurrentPage = await LoadPage(0);
             NextPage = LoadPage(1);
+            SetPage(0);
             Refresh();
         }
 
@@ -63,7 +65,7 @@ namespace Longbox
                 {
                     lock (this)
                     {
-                        if (num >= Pages.Length) return null;
+                        if (num >= Pages.Length || num < 0) return null;
                         var str = Pages[num].OpenEntryStream();
                         var img = Image.FromStream(str);
                         return img;                        
@@ -74,15 +76,51 @@ namespace Longbox
             return t;
         }
 
-        private async void TurnPage(object sender, MouseEventArgs e)
+        private async void SetPage(int newPageNumber)
         {
-            Image next = await NextPage;
-            if (next == null) return;
-            PrevPage = CurrentPage;
-            CurrentPageNumber++;
-            CurrentPage = next;
+            if (newPageNumber < 0 || newPageNumber >= Pages.Length) return;
+            Window.setPageLabel(string.Format("{0} / {1}", newPageNumber + 1, Pages.Length));
+            if (newPageNumber == CurrentPageNumber) return;
+            Image curr = CurrentPage;
+
+            // We're just going to the next page
+            if (newPageNumber == CurrentPageNumber + 1)
+            {
+                Image next = await NextPage;
+                if (next == null) return;
+                PrevPage = new Task<Image>( () => curr ); PrevPage.Start();
+                CurrentPage = next;
+                Refresh();
+                CurrentPageNumber = newPageNumber;
+                NextPage = LoadPage(CurrentPageNumber + 1);
+                return;
+            }
+
+            // we're going to the previous page
+            if (newPageNumber == CurrentPageNumber - 1)
+            {
+                Image prev = await PrevPage;
+                NextPage = new Task<Image>( () => curr ); NextPage.Start();
+                if (prev == null) return;
+                CurrentPage = prev;
+                Refresh();
+                CurrentPageNumber = newPageNumber;
+                PrevPage = LoadPage(CurrentPageNumber - 1);
+                return;
+            }
+
+            // Nope, we're just going to an arbitrary page.
+            var newCurrent = LoadPage(newPageNumber);
+            NextPage = LoadPage(newPageNumber + 1);
+            PrevPage = LoadPage(newPageNumber - 1);
+            CurrentPage = await newCurrent;
             Refresh();
-            NextPage = LoadPage(CurrentPageNumber + 1);                
+            CurrentPageNumber = newPageNumber;
+        }
+
+        private void TurnPage(object sender, MouseEventArgs e)
+        {
+            SetPage(CurrentPageNumber+1);
         }
 
         private Rectangle FindRect(Image img)
