@@ -78,7 +78,7 @@ namespace Longbox
 
         private async void SetPage(int newPageNumber)
         {
-            if (newPageNumber < 0 || newPageNumber >= Pages.Length) return;
+            if (Pages == null || newPageNumber < 0 || newPageNumber >= Pages.Length) return;
             Window.setPageLabel(string.Format("{0} / {1}", newPageNumber + 1, Pages.Length));
             if (newPageNumber == CurrentPageNumber) return;
             Image curr = CurrentPage;

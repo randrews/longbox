@@ -28,26 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.menuBar = new System.Windows.Forms.ToolStrip();
             this.openButton = new System.Windows.Forms.ToolStripButton();
             this.fullScreenButton = new System.Windows.Forms.ToolStripButton();
+            this.pageNumberLabel = new System.Windows.Forms.ToolStripLabel();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.pageView = new Longbox.PageView();
-            this.pageNumberLabel = new System.Windows.Forms.ToolStripLabel();
-            this.toolStrip1.SuspendLayout();
+            this.menuBar.SuspendLayout();
             this.SuspendLayout();
             // 
-            // toolStrip1
+            // menuBar
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openButton,
             this.fullScreenButton,
             this.pageNumberLabel});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(284, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
+            this.menuBar.Location = new System.Drawing.Point(0, 0);
+            this.menuBar.Name = "menuBar";
+            this.menuBar.Size = new System.Drawing.Size(284, 25);
+            this.menuBar.TabIndex = 0;
+            this.menuBar.Text = "toolStrip1";
             // 
             // openButton
             // 
@@ -67,6 +67,13 @@
             this.fullScreenButton.Name = "fullScreenButton";
             this.fullScreenButton.Size = new System.Drawing.Size(23, 22);
             this.fullScreenButton.Text = "Full screen";
+            this.fullScreenButton.Click += new System.EventHandler(this.fullScreenButton_Click);
+            // 
+            // pageNumberLabel
+            // 
+            this.pageNumberLabel.Name = "pageNumberLabel";
+            this.pageNumberLabel.Size = new System.Drawing.Size(0, 22);
+            this.pageNumberLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // openFileDialog
             // 
@@ -81,12 +88,7 @@
             this.pageView.Name = "pageView";
             this.pageView.Size = new System.Drawing.Size(284, 236);
             this.pageView.TabIndex = 1;
-            // 
-            // pageNumberLabel
-            // 
-            this.pageNumberLabel.Name = "pageNumberLabel";
-            this.pageNumberLabel.Size = new System.Drawing.Size(0, 22);
-            this.pageNumberLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.pageView.Window = null;
             // 
             // MainWindow
             // 
@@ -94,11 +96,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Controls.Add(this.pageView);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.menuBar);
+            this.KeyPreview = true;
             this.Name = "MainWindow";
             this.Text = "Longbox";
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainWindow_KeyDown);
+            this.menuBar.ResumeLayout(false);
+            this.menuBar.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -106,7 +110,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip menuBar;
         private System.Windows.Forms.ToolStripButton openButton;
         private System.Windows.Forms.ToolStripButton fullScreenButton;
         private PageView pageView;
