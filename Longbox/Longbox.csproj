@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CBZLoader.cs" />
     <Compile Include="Dragging.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -60,6 +61,7 @@
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="IPageLoader.cs" />
     <Compile Include="PageView.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -6,6 +6,11 @@ namespace Longbox
 {
     partial class PageView
     {
+        private bool _dragging;
+        private int _dragStartX;
+        private int _dragOffset;
+        private int _currentDragOffset;
+
         private void PageView_MouseDown(object sender, MouseEventArgs e)
         {
             StartDrag(e.X);
@@ -18,38 +23,38 @@ namespace Longbox
 
         private void PageView_MouseMove(object sender, MouseEventArgs e)
         {
-            if (Dragging) UpdateDrag(e.X);
+            if (_dragging) UpdateDrag(e.X);
         }
 
         private void StartDrag(int x)
         {
-            DragStartX = x;
-            CurrentDragOffset = 0;
-            Dragging = true;
+            _dragStartX = x;
+            _currentDragOffset = 0;
+            _dragging = true;
         }
 
         private void EndDrag()
         {
-            Dragging = false;
-            DragOffset = OffsetForDisplay();
+            _dragging = false;
+            _dragOffset = OffsetForDisplay();
         }
 
         private void UpdateDrag(int x)
         {
-            CurrentDragOffset = x - DragStartX;
+            _currentDragOffset = x - _dragStartX;
             Refresh();
         }
 
         private void ResetDrag()
         {
-            Dragging = false;
-            DragOffset = 0;
-            CurrentDragOffset = 0;
-            DragStartX = 0;
+            _dragging = false;
+            _dragOffset = 0;
+            _currentDragOffset = 0;
+            _dragStartX = 0;
         }
         private bool DragHappened(int x)
         {
-            return Math.Abs(x - DragStartX) >= 10;
+            return Math.Abs(x - _dragStartX) >= 10;
         }
 
         private int MaxOffset()
@@ -63,7 +68,7 @@ namespace Longbox
 
         private int OffsetForDisplay()
         {
-            int off = DragOffset + CurrentDragOffset;
+            int off = _dragOffset + _currentDragOffset;
             off = Math.Min(0, off);
             off = Math.Max(-MaxOffset(), off);
             return off;
