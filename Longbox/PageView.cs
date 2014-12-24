@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-using SharpCompress.Archive;
 
 namespace Longbox
 {
@@ -30,7 +19,11 @@ namespace Longbox
 
         public void OpenComic(string filename)
         {
-            PageLoader = new CBZLoader();
+            if(SolidLoader.IsSolid(filename))
+                PageLoader = new SolidLoader();
+            else
+                PageLoader = new ArchiveLoader();
+
             PageLoader.OpenComic(filename);
             CurrentPageNumber = 0;
             SetPage(0);
@@ -48,6 +41,8 @@ namespace Longbox
 
             Window.setPageLabel(string.Format("{0} / {1}", CurrentPageNumber + 1, PageLoader.NumPages));
             Refresh();
+
+            PageLoader.LoadPage(newPageNumber + 1); // Kick off the next page if it's not already
         }
 
         public void TurnPage()

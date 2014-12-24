@@ -9,7 +9,7 @@ using SharpCompress.Archive;
 namespace Longbox
 {
 
-    class CBZLoader : IPageLoader
+    class ArchiveLoader : IPageLoader
     {
         private IArchiveEntry[] Pages { get; set; }
         private int CurrentPageNumber { get; set; }
@@ -68,7 +68,7 @@ namespace Longbox
             return t;
         }
 
-        public async void OpenComic(string filename)
+        public void OpenComic(string filename)
         {
             var stream = System.IO.File.OpenRead(filename);
             var arch = ArchiveFactory.Open(stream);

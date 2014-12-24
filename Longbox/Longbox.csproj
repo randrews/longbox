@@ -48,7 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CBZLoader.cs" />
+    <Compile Include="SolidLoader.cs" />
+    <Compile Include="ArchiveLoader.cs" />
     <Compile Include="Dragging.cs">
       <SubType>UserControl</SubType>
     </Compile>
