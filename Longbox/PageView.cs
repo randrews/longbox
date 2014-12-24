@@ -56,16 +56,6 @@ namespace Longbox
             Refresh();
         }
 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
-
-            if (CurrentPage != null)
-            {
-                e.Graphics.DrawImage(CurrentPage, FindRect(CurrentPage));
-            }
-        }
-
         private Task<Image> LoadPage(int num)
         {
             var t = new Task<Image>(
@@ -145,104 +135,6 @@ namespace Longbox
             if(x <= 0.25) TurnPageBack();
             else if (x >= 0.75) TurnPage();
             else Window.ToggleMenuBar();
-        }
-
-        private Rectangle FindRect(Image img)
-        {
-            var aspectRatio = (float)img.Width / img.Height;
-
-            if (aspectRatio <= 1)
-                return SinglePageRectangle(img);
-            return MultiPageRectangle(img);
-        }
-
-        private Rectangle MultiPageRectangle(Image img)
-        {
-            var aspectRatio = (float)img.Width / img.Height;
-            var size = new SizeF(Height * aspectRatio, Height);
-
-            int left;
-            left = Width > size.Width ? (int) (Width - size.Width)/2 : OffsetForDisplay();
-
-            return new Rectangle(left, 0, (int)size.Width, (int)size.Height);
-        }
-
-        private Rectangle SinglePageRectangle(Image img)
-        {
-            var aspectRatio = (float)img.Width / img.Height;
-            var heightScale = (float)img.Height / Height;
-            var widthScale = (float)img.Width / Width;
-
-            var size = heightScale >= widthScale
-                ? new SizeF(Height * aspectRatio, Height)
-                : new SizeF(Width, Width / aspectRatio);
-
-            var left = (int)(Width - size.Width) / 2;
-            var top = (int)(Height - size.Height) / 2;
-            return new Rectangle(left, top, (int)size.Width, (int)size.Height);
-        }
-
-        private void PageView_MouseDown(object sender, MouseEventArgs e)
-        {
-            StartDrag(e.X);
-        }
-
-        private void PageView_MouseUp(object sender, MouseEventArgs e)
-        {
-            EndDrag();
-        }
-
-        private void PageView_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (Dragging) UpdateDrag(e.X);
-        }
-
-        private void StartDrag(int x)
-        {
-            DragStartX = x;
-            CurrentDragOffset = 0;
-            Dragging = true;
-        }
-
-        private void EndDrag()
-        {
-            Dragging = false;
-            DragOffset = OffsetForDisplay();
-        }
-
-        private void UpdateDrag(int x)
-        {
-            CurrentDragOffset = x - DragStartX;
-            Refresh();
-        }
-
-        private void ResetDrag()
-        {
-            Dragging = false;
-            DragOffset = 0;
-            CurrentDragOffset = 0;
-            DragStartX = 0;
-        }
-        private bool DragHappened(int x)
-        {
-            return Math.Abs(x - DragStartX) >= 10;
-        }
-
-        private int MaxOffset()
-        {
-            if (CurrentPage == null) return 0;
-            var aspectRatio = (float)CurrentPage.Width / CurrentPage.Height;
-            var size = new SizeF(Height * aspectRatio, Height);
-
-            return Math.Max(0, (int)size.Width - Width);
-        }
-
-        private int OffsetForDisplay()
-        {
-            int off = DragOffset + CurrentDragOffset;
-            off = Math.Min(0, off);
-            off = Math.Max(-MaxOffset(), off);
-            return off;
         }
     }
 }

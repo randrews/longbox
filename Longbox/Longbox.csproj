@@ -48,6 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dragging.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Drawing.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
