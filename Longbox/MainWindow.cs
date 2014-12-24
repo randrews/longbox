@@ -55,8 +55,38 @@ namespace Longbox
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
-                SetFullScreen(false);
+            switch (e.KeyCode)
+            {
+                case Keys.Escape:
+                    ToggleMenuBar();
+                    break;
+                case Keys.Left:
+                    pageView.TurnPageBack();
+                    break;
+                case Keys.Right:
+                    pageView.TurnPage();
+                    break;
+            }
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.Left:
+                    pageView.TurnPageBack();
+                    return true;
+                case Keys.Right:
+                    pageView.TurnPage();
+                    return true;
+                default:
+                    return base.ProcessCmdKey(ref msg, keyData);
+            }
+        }
+
+        public void ToggleMenuBar()
+        {
+            menuBar.Visible = !menuBar.Visible;
         }
     }
 }

@@ -118,9 +118,24 @@ namespace Longbox
             CurrentPageNumber = newPageNumber;
         }
 
-        private void TurnPage(object sender, MouseEventArgs e)
+        public void TurnPage()
         {
             SetPage(CurrentPageNumber+1);
+        }
+
+        public void TurnPageBack()
+        {
+            SetPage(CurrentPageNumber-1);
+        }
+
+        private void HandleMouseDown(object sender, MouseEventArgs e)
+        {
+            float x = (float) (e.X) / Width;
+            float y = (float) (e.Y) / Height;
+
+            if(x <= 0.25) TurnPageBack();
+            else if (x >= 0.75) TurnPage();
+            else Window.ToggleMenuBar();
         }
 
         private Rectangle FindRect(Image img)

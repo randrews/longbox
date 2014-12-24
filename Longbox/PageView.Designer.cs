@@ -37,7 +37,7 @@
             this.BackColor = System.Drawing.Color.Black;
             this.DoubleBuffered = true;
             this.Name = "PageView";
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TurnPage);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.ResumeLayout(false);
 
         }
