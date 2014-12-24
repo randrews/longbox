@@ -37,7 +37,10 @@
             this.BackColor = System.Drawing.Color.Black;
             this.DoubleBuffered = true;
             this.Name = "PageView";
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.HandleMouseClick);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PageView_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PageView_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PageView_MouseUp);
             this.ResumeLayout(false);
 
         }
