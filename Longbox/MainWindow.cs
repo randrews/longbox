@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Longbox
@@ -21,6 +22,7 @@ namespace Longbox
         private void openFileDialog_FileOk(object sender, CancelEventArgs e)
         {
             pageView.OpenComic(openFileDialog.FileName);
+            Text = Path.GetFileNameWithoutExtension(openFileDialog.FileName);
         }
 
         public void setPageLabel(string txt)
