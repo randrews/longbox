@@ -12,6 +12,15 @@ namespace Longbox
         {
             InitializeComponent();
             pageView.Window = this;
+            pageView.MouseWheel += new MouseEventHandler(mouseWheel);
+        }
+
+        private void mouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta > 0)
+                pageView.TurnPageBack();
+            else if(e.Delta < 0)
+                pageView.TurnPage();
         }
 
         private void openButton_Click(object sender, EventArgs e)
